@@ -1,0 +1,33 @@
+name: Node.js Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      docker:
+        image: docker:19.03.12
+        options: --privileged
+          
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+      
+    - name: Build and run Node.js container
+      run: |
+        docker build -t node_test - <<EOF
+        FROM node:16-alpine
+        EOF
+        
+        docker run --rm node_test node --version
