@@ -27,7 +27,7 @@ jobs:
     - name: Build and run Node.js container
       run: |
         docker build -t node_test - <<EOF
-        FROM node:16-alpine
+        FROM node:17-alpine
         EOF
         
         docker run --rm node_test node --version
